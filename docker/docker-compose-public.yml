@@ -10,6 +10,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/java-agent-ftv-4.0.0-SNAPSHOT.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_frontend -Dsl.tags=script,container -Dsl.labId=integ_test_microservices -Dsl.includes=microservices.book*
+    volumes:
+      - /tmp/sealights_ftv:/sealights
     depends_on:
       - rabbitmq-dev
       - consul-importer
@@ -20,6 +23,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/java-agent-ftv-4.0.0-SNAPSHOT.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_frontend -Dsl.tags=script,container -Dsl.labId=integ_test_microservices -Dsl.includes=microservices.book*
+    volumes:
+      - /tmp/sealights_ftv:/sealights
     depends_on:
       - rabbitmq-dev
       - consul-importer
@@ -32,6 +38,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/java-agent-ftv-4.0.0-SNAPSHOT.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_frontend -Dsl.tags=script,container -Dsl.labId=integ_test_microservices -Dsl.includes=microservices.book*
+    volumes:
+      - /tmp/sealights_ftv:/sealights
     depends_on:
       - rabbitmq-dev
       - consul-importer
@@ -42,6 +51,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/java-agent-ftv-4.0.0-SNAPSHOT.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_frontend -Dsl.tags=script,container -Dsl.labId=integ_test_microservices -Dsl.includes=microservices.book*
+    volumes:
+      - /tmp/sealights_ftv:/sealights
     depends_on:
       - rabbitmq-dev
       - consul-importer
