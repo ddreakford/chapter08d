@@ -1,0 +1,88 @@
+version: "3"
+
+services:
+  frontend:
+    image: learnmicro/challenges-frontend:0.0.1
+    ports:
+      - '3000:80'
+  multiplication:
+    image: learnmicro/multiplication:0.0.1
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_multiplication -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+    volumes:
+      - /tmp/sealights_ftv:/sealights
+    depends_on:
+      - rabbitmq-dev
+      - consul-importer
+    networks:
+      - microservices
+  gamification:
+    image: learnmicro/gamification:0.0.1
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gamification -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+    volumes:
+      - /tmp/sealights_ftv:/sealights
+    depends_on:
+      - rabbitmq-dev
+      - consul-importer
+    networks:
+      - microservices
+  gateway:
+    image: learnmicro/gateway:0.0.1
+    ports:
+      - '8000:8000'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gateway -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+    volumes:
+      - /tmp/sealights_ftv:/sealights
+    depends_on:
+      - rabbitmq-dev
+      - consul-importer
+    networks:
+      - microservices
+  logs:
+    image: learnmicro/logs:0.0.1
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_logs -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+    volumes:
+      - /tmp/sealights_ftv:/sealights
+    depends_on:
+      - rabbitmq-dev
+      - consul-importer
+    networks:
+      - microservices
+  consul-importer:
+    image: learnmicro/consul-importer:0.0.1
+    depends_on:
+      - consul-dev
+    networks:
+      - microservices
+  consul-dev:
+    image: consul:1.7.2
+    container_name: consul
+    ports:
+      - '8500:8500'
+      - '8600:8600/udp'
+    command: 'agent -dev -node=learnmicro -client=0.0.0.0 -log-level=INFO'
+    networks:
+      - microservices
+  rabbitmq-dev:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - microservices
+
+networks:
+  microservices:
+    driver: bridge
