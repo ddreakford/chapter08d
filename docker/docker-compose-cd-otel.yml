@@ -10,7 +10,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_multiplication -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true 
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_multiplication -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true -Dsl.log.toConsole=true -Dsl.log.level=info
     volumes:
       - /tmp/sealights_ftv:/sealights
     depends_on:
@@ -23,7 +23,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gamification -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gamification -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true -Dsl.log.toConsole=true -Dsl.log.level=info
     volumes:
       - /tmp/sealights_ftv:/sealights
     depends_on:
@@ -38,7 +38,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gateway -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_gateway -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true -Dsl.log.toConsole=true -Dsl.log.level=info
     volumes:
       - /tmp/sealights_ftv:/sealights
     depends_on:
@@ -51,7 +51,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_logs -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true
+      - JAVA_OPTS= -javaagent:/sealights/sl-cd-agent.jar -Dsl.token=${SL_TOKEN} -Dsl.appName=microservicesbook_logs -Dsl.buildName=${BUILD_NUMBER} -Dsl.tags=script,container -Dsl.labId=integ_test_microservicesbook -Dsl.includes=microservices.book* -Dsl.featuresData.codeCoverageManagerVersion=v2 -Dsl.otel.enabled=true -Dsl.otel.loadEmbeddedAgent=true -Dsl.log.toConsole=true -Dsl.log.level=info
     volumes:
       - /tmp/sealights_ftv:/sealights
     depends_on:
