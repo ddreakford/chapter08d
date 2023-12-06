@@ -19,8 +19,8 @@ pipeline {
          steps {            
             withCredentials([string(credentialsId: params.TOKEN, variable: 'SL_TOKEN')]) {
                 sh '''
-                  rm -rf sealights_ftv && mkdir -p sealights_ftv
-                  cd sealights_ftv
+                  rm -rf /tmp/sealights_ftv && mkdir -p /tmp/sealights_ftv
+                  cd /tmp/sealights_ftv
 
                   echo "$SL_TOKEN" > sltoken.txt
 
@@ -34,8 +34,8 @@ pipeline {
       stage('Build') {
          steps {
             sh '''
-              echo "SL_TOKEN=$(cat sealights_ftv/sltoken.txt)" > ./docker/.env
-              cd docker
+              echo "SL_TOKEN=$(cat /tmp/sealights_ftv/sltoken.txt)" > ./docker/.env
+              cd docker && ls -la
               docker-compose kill
               docker-compose -f docker-compose-cd-otel.yml up -d
             '''
