@@ -1,0 +1,46 @@
+pipeline {
+   agent any
+
+    parameters {
+        string(name: 'TOKEN', defaultValue: 'sl.agent.token', description: 'Name/key of the SL agent token credential')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to clone')
+        string(name: 'CD_AGENT_VERSION', defaultValue: 'latest', description: 'CD agent to use')
+    }
+    options {
+      buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
+    }
+   stages {
+      stage('Checkout') {
+         steps {
+            git branch: params.BRANCH, url: 'https://github.com/ddreakford/chapter08d.git'
+         }
+      }
+      stage('Prepare Sealights') {
+         steps {            
+            withCredentials([string(credentialsId: params.TOKEN, variable: 'SL_TOKEN')]) {
+                sh '''
+                  rm -rf sealights_ftv && mkdir -p sealights_ftv
+                  cd sealights_ftv
+
+                  echo "$SL_TOKEN" > sltoken.txt
+
+                  wget -nv  https://agents.sealights.co/sl-cd-agent/sl-cd-agent-${CD_AGENT_VERSION}.zip -O sl-cd-agent.zip
+                  unzip -oq sl-cd-agent.zip
+                  rm sl-cd-agent*.zip
+                '''
+            }
+         }
+      }
+      stage('Build') {
+         steps {
+            sh '''
+              echo "SL_TOKEN=$(cat sealights_ftv/sltoken.txt)" > ./docker/.env
+              cd docker
+              docker-compose kill
+              docker-compose -f docker-compose-cd-otel.yml up -d
+            '''
+         }
+      }
+
+   }
+}
